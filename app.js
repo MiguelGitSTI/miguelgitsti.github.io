@@ -35,7 +35,8 @@
 	const files = [
 		{ src: 'Music/Perfect.mp3', title: 'Perfect', artist: 'Ed Sheeran' },
 		{ src: 'Music/You Are The Reason.mp3', title: 'You Are The Reason', artist: 'Calum Scott' },
-        { src: 'Music/All of Me.mp3', title: 'All of Me', artist: 'John Legend' }
+		// NOTE: Filename is case-sensitive on GitHub Pages (Linux). Ensure it matches exactly.
+		{ src: 'Music/All Of Me.mp3', title: 'All Of Me', artist: 'John Legend' }
 	];
 	const toggleBtn = document.getElementById('audioToggle');
 	const volumeSlider = document.getElementById('bgVolume');
@@ -47,6 +48,7 @@
 
 	let currentIndex = 0;
 	let audio = new Audio(); // primary playing element
+	audio.addEventListener('error', ()=> console.warn('Audio error (primary) on', audio.src, audio.error));
 	let fadingOutAudio = null; // secondary element for crossfade
 	let userInteracted = false;
 	let playing = false;
@@ -108,6 +110,7 @@
 			}
 			fadingOutAudio = audio;
 			const newAudio = new Audio();
+			newAudio.addEventListener('error', ()=> console.warn('Audio error (crossfade new) on', newAudio.src, newAudio.error));
 			audio = newAudio;
 			// Set initial volume to 0 for fade-in
 			const targetVol = parseInt(volumeSlider.value, 10) / 100;
