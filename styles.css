@@ -239,11 +239,11 @@ body { animation: fadeIn .9s ease; }
 .author-name { color:var(--accent); font-weight:600; }
 
 /* Inline love note just above footer */
-.love-note { width:min(900px,92%); margin:4.5rem auto 4.5rem; text-align:center; font-size:.78rem; letter-spacing:.7px; text-transform:uppercase; opacity:.55; line-height:1.4; }
+.love-note { width:min(900px,92%); margin:0 auto 3.2rem; text-align:center; font-size:.78rem; letter-spacing:.7px; text-transform:uppercase; opacity:.55; line-height:1.4; }
 .love-note strong { color:var(--accent); font-weight:700; letter-spacing:.9px; }
 
 /* Message Carousel */
-.message-carousel { position:relative; width:min(900px,92%); margin:0 auto 4.5rem; padding:2.2rem 3.2rem 2.6rem; background:linear-gradient(145deg, rgba(60,60,64,0.55), rgba(38,38,42,0.55)); backdrop-filter:blur(12px) saturate(140%); border:1px solid rgba(255,255,255,0.08); border-radius:32px; box-shadow:0 16px 46px -20px rgba(0,0,0,0.7), 0 4px 10px -4px rgba(0,0,0,0.55); display:flex; align-items:stretch; gap:1.2rem; overflow:hidden; isolation:isolate; }
+.message-carousel { position:relative; width:min(900px,92%); margin:0 auto 4rem; padding:2.2rem 3.2rem 2.6rem; background:linear-gradient(145deg, rgba(60,60,64,0.55), rgba(38,38,42,0.55)); backdrop-filter:blur(12px) saturate(140%); border:1px solid rgba(255,255,255,0.08); border-radius:32px; box-shadow:0 16px 46px -20px rgba(0,0,0,0.7), 0 4px 10px -4px rgba(0,0,0,0.55); display:flex; align-items:stretch; gap:1.2rem; overflow:hidden; isolation:isolate; }
 .message-carousel:before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 82% 18%, var(--accent-glow) 0%, transparent 68%); opacity:.4; pointer-events:none; mix-blend-mode:screen; }
 .message-carousel:after { content:""; position:absolute; inset:0; background:linear-gradient(160deg, var(--accent-glow-strong), transparent 75%); mix-blend-mode:overlay; pointer-events:none; }
 .message-carousel .mc-arrow { position:relative; z-index:3; appearance:none; border:1px solid rgba(255,255,255,0.2); background:linear-gradient(135deg,var(--accent),var(--accent-alt)); color:#fff; width:48px; height:48px; border-radius:50%; cursor:pointer; font-size:1.3rem; font-weight:600; letter-spacing:.5px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px -6px var(--accent-glow); transition: transform .4s cubic-bezier(.16,.84,.44,1), filter .4s ease, box-shadow .4s ease, opacity .4s ease; }
@@ -253,15 +253,16 @@ body { animation: fadeIn .9s ease; }
 .message-carousel .mc-viewport { flex:1; position:relative; overflow:visible; display:block; padding:.15rem 0 .35rem; }
 .message-carousel .mc-viewport .mc-stage { position:relative; width:100%; transition: height .55s cubic-bezier(.4,0,.2,1); }
 .message-carousel .mc-viewport .mc-stage > .mc-slide { position:relative; }
-.message-carousel .mc-slide { margin:0; padding:.2rem .4rem; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.9rem; opacity:0; transform:translateY(10px); filter:blur(6px); pointer-events:none; transition: opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1), filter .55s ease; }
+.message-carousel .mc-slide { margin:0; padding:.2rem .4rem; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:.9rem; opacity:0; transform:translateY(10px); filter:blur(6px); pointer-events:none; transition: opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1), filter .55s ease; max-width:640px; margin-left:auto; margin-right:auto; }
 .message-carousel .mc-slide.active { opacity:1; transform:translateY(0); filter:blur(0); pointer-events:auto; position:relative; }
 /* Sequential fade classes */
 .message-carousel .mc-slide.fading-out { opacity:0 !important; transform:translateY(-10px) !important; filter:blur(6px) !important; }
 .message-carousel .mc-slide.pre-incoming { opacity:0; transform:translateY(18px); filter:blur(6px); }
 /* Outgoing clone (absolutely positioned for smooth cross-fade without affecting height) */
 .message-carousel .mc-slide.outgoing-clone { position:absolute; left:0; right:0; width:100%; pointer-events:none; }
-.mc-message { margin:0; font-size:clamp(1rem, 2.9vw, 1.12rem); line-height:1.55; letter-spacing:.35px; text-align:center; color:#f2f2f3; font-weight:500; word-break:break-word; }
+.mc-message { margin:0; font-size:clamp(1rem, 2.9vw, 1.12rem); line-height:1.55; letter-spacing:.35px; text-align:left; color:#f2f2f3; font-weight:500; word-break:break-word; }
 .mc-meta { margin:0; font-size:.7rem; letter-spacing:.8px; text-transform:uppercase; color:var(--accent-soft); opacity:.85; }
+.mc-date { margin:0; font-size:.58rem; letter-spacing:.9px; text-transform:uppercase; color:var(--accent-alt); opacity:.8; font-weight:600; }
 .message-carousel .mc-dots { position:absolute; bottom:-1.4rem; left:50%; transform:translateX(-50%); display:flex; gap:.55rem; z-index:4; }
 .message-carousel .mc-dots button { width:10px; height:10px; border-radius:50%; border:1px solid var(--accent-soft); background:rgba(255,255,255,0.15); cursor:pointer; padding:0; appearance:none; transition:background .4s ease, transform .4s ease, box-shadow .4s ease; }
 .message-carousel .mc-dots button[aria-selected="true"] { background:linear-gradient(135deg,var(--accent),var(--accent-alt)); box-shadow:0 0 0 3px rgba(255,255,255,0.08), 0 4px 14px -4px var(--accent-glow); transform:scale(1.25); }
@@ -395,9 +396,3 @@ body { animation: fadeIn .9s ease; }
 	.signature .sig-name { font-size:1.05rem; }
 }
 
-/* === Spacing Normalization (Option A) ===
-   Ensure the gap above the love note is defined solely by its own top margin (4.5rem)
-   by removing any residual bottom margin contribution from the final alternating row. */
-.alt-rows > .alt-row:last-child { margin-bottom:0 !important; }
-.alt-rows > .alt-row:last-child .text-block p:last-child,
-.alt-rows > .alt-row:last-child .card-block p:last-child { margin-bottom:0 !important; }
