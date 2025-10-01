@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A simple, scroll-smooth, single-page information experience." />
+    <title>Our Story</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="introOverlay" role="dialog" aria-labelledby="introHeading" aria-modal="true">
+        <div class="overlay-minimal">
+            <img src="Image Assets/headphones.svg" alt="" class="overlay-icon" aria-hidden="true" />
+            <p id="introHeading" class="overlay-advisory">Best with headphones • tap to begin</p>
+        </div>
+    </div>
+    <div id="luxy" class="initial-blur">
+    <main class="content" id="content" tabindex="-1">
+        <div id="playerBar" class="player-bar" aria-hidden="true">
+            <div class="player-info">
+                <div class="now-playing"><span class="np-label">Background music:</span> <span id="trackTitle" class="np-title">—</span></div>
+                <div class="artist-line"><span class="artist-label">Artist:</span> <span id="trackArtist">—</span></div>
+                <ul id="trackList" class="track-list" aria-label="Available tracks"></ul>
+            </div>
+            <div class="bar-controls">
+                <button class="audio-play" id="audioToggle" aria-pressed="false" aria-label="Play background music">Play</button>
+                <input type="range" id="bgVolume" min="0" max="100" value="60" aria-label="Background music volume" />
+            </div>
+            <p class="autoplay-note" id="autoplayNote" hidden>Tap play to start audio (autoplay blocked).</p>
+        </div>
+        <div class="polaroid-cluster" aria-hidden="true"></div>
+        <section class="letter-card" aria-labelledby="letterHeading">
+            <div class="letter-inner">
+                <header class="letter-header">
+                    <p class="letter-salutation">My dearest Daphne,</p>
+                </header>
+                <div class="letter-body">
+                    <p>This letter is a testament of our journey that we have started a year ago. The happiness, the sadness, the growth, and everything in between.</p>
+                    <p>You turned my whole life upside down when you came into it, and I didn't even mind it. Not at all. You've turned every ordinary thing into something extraordinary. You taught me that love is a choice that we make everyday. To that, I choose you every single day.</p>
+                    <p>I love you because you make me happy, you lighten up my day, and because you give me the chance to love you the same. At the same time, I love you despite the challenges that we have encountered together in this relationship.</p>
+                    <p>My darling, this marks our first year, and if you want, let's take a nostalgia trip together. Scroll down, slowly.</p>
+                </div>
+                <footer class="letter-signoff">
+                    <p class="signature">Always yours,<br><span class="sig-name">Miguel</span></p>
+                </footer>
+            </div>
+        </section>
+        <div class="alt-rows" aria-label="Alternating story layout">
+            <div class="alt-row">
+                <div class="card-block section">
+                    <h3 class="card-heading">1. The Beginning</h3>
+                    <blockquote>“Poetry brings everything, and in our case, it brought love.”</blockquote>
+                    <p class="micro-note">Micro-moment #01 — Silent and Daphiez.</p>
+                </div>
+                <div class="text-block">
+                    <p>The beginning of everything, when I was a mere poet, writing about you, a poem. A sparking love that both of us rejected in fear of rejection. A sparking love that both of us turned away because of pain.</p>
+                </div>
+            </div>
+            <div class="alt-row">
+                <div class="text-block">
+                    <p>Each message turned more romantic, and the more we denied, the deeper we fell into this thing called love. I didn't think that I would fall in love, but who could've known I would confess first?</p>
+                </div>
+                <div class="card-block section">
+                    <h3 class="card-heading">2. The Spark of Love</h3>
+                    <blockquote>“Every single day, I fall more in love with you.”</blockquote>
+                    <p class="micro-note">Micro-moment #07 — The First "I Love You."</p>
+                </div>
+            </div>
+            <div class="alt-row">
+                <div class="card-block section">
+                    <h3 class="card-heading">3. The Challenges</h3>
+                    <blockquote>“In sickness and in health, for better or worse, I choose you, till death do us part.”</blockquote>
+                    <p class="micro-note">Micro-Moment #14 — Miguel and Daphne.</p>
+                </div>
+                <div class="text-block">
+                    <p>The calm, the love, and our gaps. No matter the distance, no matter what happens, I want to let you know that I choose to love you everyday, even in your worst times.</p>
+                </div>
+            </div>
+            <div class="alt-row">
+                <div class="text-block">
+                    <p>I love you because of your kindness, your love, and the way you make my heart beat every single time. I love you despite our fights, our misunderstandings, and the moments of silence.</p>
+                </div>
+                <div class="card-block section">
+                    <h3 class="card-heading">4. ILY Because, ILY Despite</h3>
+                    <blockquote>“I saw you were perfect and I loved you. Then I saw you were not perfect and I loved you even more.”</blockquote>
+                    <p class="micro-note">Micro-moment #24 — The goods and the gaps.</p>
+                </div>
+            </div>
+            <div class="alt-row">
+                <div class="card-block section">
+                    <h3 class="card-heading">5. No Matter What</h3>
+                    <blockquote>“Every test stitched resilience through the quiet parts.”</blockquote>
+                    <p class="micro-note">Micro-moment #25 — To fight through regardless.</p>
+                </div>
+                <div class="text-block">
+                    <p>Future = continuation plus small reinventions.</p>
+                    <p>We prototype better ways to rest and celebrate.</p>
+                </div>
+            </div>
+            <div class="alt-row">
+                <div class="text-block">
+                    <p>I love you. To the point where I can't imagine my life without you. To the point where I want to keep choosing you every day, and every life after this one.</p>
+                </div>
+                <div class="card-block section">
+                    <h3 class="card-heading">6. A Neverending Ending</h3>
+                    <blockquote>“Even if I were to live again, every single time, I will still look for you.”</blockquote>
+                    <p class="micro-note">Micro-moment #∞ — Till death do us part.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+        <p>Created by <span class="author-name">Miguel</span></p>
+    </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/luxy.js@0.1.0/dist/js/luxy.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+    // Overlay reveal handler (kept separate from app.js logic)
+    (function(){
+        function reveal(){
+            if(document.body.classList.contains('revealed')) return;
+            document.body.classList.add('revealed');
+            const playerBar = document.getElementById('playerBar');
+            if(playerBar){ playerBar.removeAttribute('aria-hidden'); }
+        }
+        const overlay = document.getElementById('introOverlay');
+        if(overlay){
+            overlay.addEventListener('click', (e)=>{
+                // Allow clicking anywhere inside
+                reveal();
+            });
+            document.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ reveal(); }});
+            // (Enter button removed in minimal design)
+        }
+    })();
+    </script>
+</body>
+</html>

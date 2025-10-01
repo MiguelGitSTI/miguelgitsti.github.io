@@ -1,0 +1,10 @@
+[
+  {"src":"Image Assets/Daph1.jpg", "x":"3vw", "dy":"-520px", "rot":"-6deg", "caption":""},
+  {"src":"Image Assets/Daph2.jpg", "x":"5vw", "dy":"-180px", "rot":"5deg", "caption":""},
+  {"src":"Image Assets/Daph3.jpg", "x":"4vw", "dy":"190px", "rot":"-9deg", "caption":""},
+  {"src":"Image Assets/Daph4.jpg", "x":"6vw", "dy":"520px", "rot":"7deg", "caption":""},
+  {"src":"Image Assets/Daph5.jpg", "x":"80vw", "dy":"-500px", "rot":"7deg", "caption":""},
+  {"src":"Image Assets/Daph6.jpg", "x":"78vw", "dy":"-100px", "rot":"-5deg", "caption":""},
+  {"src":"Image Assets/Daph7.jpg", "x":"81vw", "dy":"250px", "rot":"10deg", "caption":""},
+  {"src":"Image Assets/Daph8.jpg", "x":"79vw", "dy":"600px", "rot":"-8deg", "caption":""}
+]
