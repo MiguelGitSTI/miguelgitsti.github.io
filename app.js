@@ -265,20 +265,206 @@
 	if(!cluster) return;
 	fetch('photos.json')
 		.then(r=> r.ok ? r.json() : Promise.reject(r.status))
-		.then(list => {
-			if(!Array.isArray(list)) return;
+		.then(raw => {
+			let baseY = 0;
+			let items = [];
+			if(Array.isArray(raw)) {
+				// Legacy flat array
+				items = raw.map(r => ({ ...r, y: r.y }));
+			} else if(raw && typeof raw === 'object' && Array.isArray(raw.items)) {
+				baseY = Number(raw.baseY) || 0;
+				items = raw.items.map(r => ({ ...r }));
+			} else {
+				return; // invalid format
+			}
 			const frag = document.createDocumentFragment();
-			list.forEach(item => {
+			items.forEach(item => {
 				if(!item || !item.src) return;
 				const fig = document.createElement('figure');
 				fig.className = 'polaroid';
-				fig.style.setProperty('--x', item.x || '0');
-				if(item.dy) fig.style.setProperty('--dy', item.dy);
-				if(item.rot) fig.style.setProperty('--rot', item.rot);
+				if(item.x) fig.style.left = item.x;
+				let topVal = 0;
+				if(typeof item.y !== 'undefined') {
+					// direct y wins
+					const parsed = parseFloat(item.y);
+					topVal = isNaN(parsed) ? 0 : parsed;
+				} else if(typeof item.offsetY !== 'undefined') {
+					const parsed = parseFloat(item.offsetY);
+					topVal = baseY + (isNaN(parsed) ? 0 : parsed);
+				}
+				fig.style.top = topVal + 'px';
+				if(item.rot) fig.style.transform = `rotate(${item.rot})`;
 				fig.innerHTML = `\n  <img src="${item.src}" alt="${item.alt || ''}" loading="lazy" />\n  <figcaption>${item.caption || ''}</figcaption>\n`;
 				frag.appendChild(fig);
 			});
 			cluster.appendChild(frag);
 		})
 		.catch(err => console.warn('Polaroid load failed:', err));
+})();
+
+// Message carousel logic
+(function(){
+	const root = document.querySelector('.message-carousel');
+	if(!root) return;
+
+	let messages = []; // will be loaded from messages.json
+
+	const prevBtn = root.querySelector('.mc-prev');
+	const nextBtn = root.querySelector('.mc-next');
+	const viewport = root.querySelector('.mc-viewport');
+	let stage = viewport ? viewport.querySelector('.mc-stage') : null;
+	const dotsWrap = root.querySelector('.mc-dots');
+
+	if(!prevBtn || !nextBtn || !viewport || !dotsWrap) return;
+
+	let current = 0; let animating = false; let slides = [];
+
+	function buildDots(){
+		dotsWrap.innerHTML='';
+		messages.forEach((_,i)=>{
+			const b=document.createElement('button');
+			b.type='button';
+			b.setAttribute('role','tab');
+			b.setAttribute('aria-label', 'Show message '+(i+1));
+			b.addEventListener('click', ()=> goTo(i));
+			dotsWrap.appendChild(b);
+		});
+	}
+
+	function applyDotState(){
+		[...dotsWrap.children].forEach((b,i)=>{
+			if(i===current){ b.setAttribute('aria-selected','true'); b.tabIndex=0; } else { b.setAttribute('aria-selected','false'); b.tabIndex=-1; }
+		});
+	}
+
+	function createSlide(i){
+		const data = messages[i];
+		const art = document.createElement('article');
+		art.className='mc-slide';
+		art.setAttribute('data-index', i);
+		art.setAttribute('tabindex','0');
+		// Format timestamp if present
+		let dateLine = '';
+		if(data.timestamp){
+			const d = new Date(data.timestamp);
+			if(!isNaN(d.getTime())){
+				const mm = String(d.getMonth()+1).padStart(2,'0');
+				const dd = String(d.getDate()).padStart(2,'0');
+				const yy = String(d.getFullYear()).slice(-2);
+				let hrs = d.getHours();
+				const min = String(d.getMinutes()).padStart(2,'0');
+				const ampm = hrs >= 12 ? 'PM' : 'AM';
+				hrs = hrs % 12; if(hrs === 0) hrs = 12; // convert 0 or 12 -> 12, 13 ->1 etc.
+				const hh = String(hrs).padStart(2,'0');
+				dateLine = `<p class="mc-date" aria-label="Message timestamp">${mm}/${dd}/${yy} ${hh}:${min} ${ampm}</p>`;
+			}
+		}
+		art.innerHTML = `\n <p class="mc-message">${data.text}</p>\n <p class="mc-meta">${data.from}</p>${dateLine?`\n ${dateLine}`:''}\n`;
+		return art;
+	}
+
+	function updateButtons(){
+		// Wrap-around active: we never disable, but you requested disabled state earlier. We'll allow infinite loop but keep subtle disabled removal.
+		prevBtn.disabled = false;
+		nextBtn.disabled = false;
+	}
+
+	function mountInitial(){
+		if(!stage){
+			stage = document.createElement('div');
+			stage.className = 'mc-stage';
+			viewport.appendChild(stage);
+		}
+		stage.innerHTML='';
+		if(messages.length === 0){
+			const placeholder = document.createElement('article');
+			placeholder.className='mc-slide active';
+			placeholder.innerHTML='<p class="mc-message">No messages yet.</p><p class="mc-meta" aria-hidden="true">Add some to messages.json</p>';
+			stage.appendChild(placeholder);
+			slides=[placeholder];
+			return; // no dots if empty
+		}
+		const first = createSlide(0);
+		first.classList.add('active');
+		stage.appendChild(first);
+		slides=[first];
+		buildDots();
+		applyDotState();
+		updateButtons();
+	}
+
+	function goTo(target){
+		if(animating || target===current) return;
+		const dir = target > current ? 'right' : 'left';
+		animateTo(target, dir);
+	}
+
+	function animateTo(target, direction){
+		animating = true;
+		if(!stage){ mountInitial(); animating=false; return; }
+		const old = stage.querySelector('.mc-slide.active');
+		if(!old){ animating=false; return; }
+		// Phase 1: fade out old
+		old.classList.add('fading-out');
+		old.style.transition='opacity .42s ease, transform .42s ease, filter .42s ease';
+		const oldHeight = old.getBoundingClientRect().height;
+		stage.style.height = oldHeight + 'px'; // lock height for animation
+		setTimeout(()=>{
+			// Remove old after fade
+			old.remove();
+			// Phase 2: create and fade in incoming
+			const incoming = createSlide(target);
+			incoming.classList.add('pre-incoming');
+			stage.appendChild(incoming);
+			const newH = incoming.getBoundingClientRect().height;
+			// Animate stage height from old to new (even if smaller)
+			// Animate height change
+			requestAnimationFrame(()=>{ stage.style.height = newH + 'px'; });
+			requestAnimationFrame(()=>{
+				incoming.classList.remove('pre-incoming');
+				incoming.classList.add('active');
+				incoming.style.transition='opacity .55s ease, transform .55s ease, filter .55s ease';
+				incoming.focus({ preventScroll:true });
+				setTimeout(()=>{
+					stage.style.height='';
+					slides=[incoming];
+					current = (target + messages.length) % messages.length;
+					applyDotState();
+					updateButtons();
+					animating=false;
+				}, 600);
+			});
+		}, 430);
+	}
+
+	function next(){ goTo( (current+1) % messages.length ); }
+	function prev(){ goTo( (current-1+messages.length) % messages.length ); }
+
+	prevBtn.addEventListener('click', prev);
+	nextBtn.addEventListener('click', next);
+
+	root.addEventListener('keydown', e=>{
+		if(e.key==='ArrowRight'){ e.preventDefault(); next(); }
+		else if(e.key==='ArrowLeft'){ e.preventDefault(); prev(); }
+	});
+
+	// Swipe support (simple)
+	let startX=null; let startY=null; const threshold=40;
+	viewport.addEventListener('touchstart', e=>{ if(e.touches.length===1){ startX=e.touches[0].clientX; startY=e.touches[0].clientY; }});
+	viewport.addEventListener('touchend', e=>{ if(startX===null) return; const dx=e.changedTouches[0].clientX-startX; const dy=e.changedTouches[0].clientY-startY; if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>threshold){ dx<0 ? next(): prev(); } startX=null; startY=null; });
+
+	// Fetch external messages
+	fetch('messages.json', { cache: 'no-store' })
+		.then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status)))
+		.then(list => {
+			if(!Array.isArray(list)) throw new Error('Invalid messages format');
+			messages = list.filter(m=> m && typeof m.text === 'string' && m.text.trim().length > 0);
+			current = 0;
+			mountInitial();
+		})
+		.catch(err => {
+			console.warn('Message load failed:', err);
+			messages = [];
+			mountInitial();
+		});
 })();
