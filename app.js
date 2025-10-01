@@ -35,8 +35,7 @@
 	const files = [
 		{ src: 'Music/Perfect.mp3', title: 'Perfect', artist: 'Ed Sheeran' },
 		{ src: 'Music/You Are The Reason.mp3', title: 'You Are The Reason', artist: 'Calum Scott' },
-		// NOTE: Filename is case-sensitive on GitHub Pages (Linux). Ensure it matches exactly.
-		{ src: 'Music/All Of Me.mp3', title: 'All Of Me', artist: 'John Legend' }
+        { src: 'Music/All of Me.mp3', title: 'All of Me', artist: 'John Legend' }
 	];
 	const toggleBtn = document.getElementById('audioToggle');
 	const volumeSlider = document.getElementById('bgVolume');
@@ -48,7 +47,6 @@
 
 	let currentIndex = 0;
 	let audio = new Audio(); // primary playing element
-	audio.addEventListener('error', ()=> console.warn('Audio error (primary) on', audio.src, audio.error));
 	let fadingOutAudio = null; // secondary element for crossfade
 	let userInteracted = false;
 	let playing = false;
@@ -110,7 +108,6 @@
 			}
 			fadingOutAudio = audio;
 			const newAudio = new Audio();
-			newAudio.addEventListener('error', ()=> console.warn('Audio error (crossfade new) on', newAudio.src, newAudio.error));
 			audio = newAudio;
 			// Set initial volume to 0 for fade-in
 			const targetVol = parseInt(volumeSlider.value, 10) / 100;
@@ -440,7 +437,30 @@
 		}, 430);
 	}
 
-	function next(){ goTo( (current+1) % messages.length ); }
+	const finalOverlay = document.getElementById('finalOverlay');
+	let finalShown = false;
+	function showFinalOverlay(){
+		if(!finalOverlay || finalShown) return;
+		finalShown = true;
+		finalOverlay.hidden = false;
+		finalOverlay.setAttribute('aria-hidden','false');
+		finalOverlay.classList.add('active');
+		const closeBtn = finalOverlay.querySelector('.final-close');
+		if(closeBtn){
+			closeBtn.addEventListener('click', ()=>{
+				finalOverlay.classList.remove('active');
+				setTimeout(()=>{ finalOverlay.hidden = true; finalOverlay.setAttribute('aria-hidden','true'); }, 650);
+			});
+		}
+	}
+	function next(){
+		const wasLast = (current === messages.length -1);
+		goTo( (current+1) % messages.length );
+		if(wasLast) {
+			// After wrap, show overlay (non-blocking) similar to autoplay advisory
+			setTimeout(showFinalOverlay, 120);
+		}
+	}
 	function prev(){ goTo( (current-1+messages.length) % messages.length ); }
 
 	prevBtn.addEventListener('click', prev);

@@ -263,6 +263,16 @@ body { animation: fadeIn .9s ease; }
 .mc-message { margin:0; font-size:clamp(1rem, 2.9vw, 1.12rem); line-height:1.55; letter-spacing:.35px; text-align:left; color:#f2f2f3; font-weight:500; word-break:break-word; }
 .mc-meta { margin:0; font-size:.7rem; letter-spacing:.8px; text-transform:uppercase; color:var(--accent-soft); opacity:.85; }
 .mc-date { margin:0; font-size:.58rem; letter-spacing:.9px; text-transform:uppercase; color:var(--accent-alt); opacity:.8; font-weight:600; }
+/* Final anniversary overlay */
+.final-overlay { position:fixed; inset:0; backdrop-filter:blur(18px) brightness(.85); background:rgba(10,10,14,0.55); z-index:1200; display:flex; align-items:center; justify-content:center; padding:2rem; opacity:0; pointer-events:none; transition:opacity .7s ease; }
+.final-overlay.active { opacity:1; pointer-events:auto; }
+.final-content { text-align:center; animation: popIn .9s cubic-bezier(.16,.84,.44,1); max-width:820px; }
+.final-title { margin:0 0 1.1rem; font-size:clamp(2.4rem,7.5vw,4.2rem); line-height:1.05; background:linear-gradient(90deg,var(--accent),var(--accent-alt)); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:1.2px; }
+.final-sub { margin:0 0 2.2rem; font-size:clamp(1rem,2.3vw,1.4rem); letter-spacing:.8px; color:#eee; opacity:.9; font-weight:500; }
+.final-close { appearance:none; border:none; background:linear-gradient(135deg,var(--accent),var(--accent-alt)); color:#fff; padding:.95rem 1.9rem; font-size:.85rem; letter-spacing:.85px; text-transform:uppercase; font-weight:600; border-radius:40px; cursor:pointer; box-shadow:0 10px 28px -12px var(--accent-glow); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s ease, filter .45s ease; }
+.final-close:hover { transform:translateY(-4px); box-shadow:0 18px 40px -18px var(--accent-glow); filter:brightness(1.07); }
+.final-close:active { transform:translateY(-1px); }
+@keyframes popIn { 0% { opacity:0; transform:scale(.85) translateY(20px); filter:blur(6px); } 55% { opacity:1; transform:scale(1.015) translateY(0); filter:blur(0);} 100% { opacity:1; transform:scale(1) } }
 .message-carousel .mc-dots { position:absolute; bottom:-1.4rem; left:50%; transform:translateX(-50%); display:flex; gap:.55rem; z-index:4; }
 .message-carousel .mc-dots button { width:10px; height:10px; border-radius:50%; border:1px solid var(--accent-soft); background:rgba(255,255,255,0.15); cursor:pointer; padding:0; appearance:none; transition:background .4s ease, transform .4s ease, box-shadow .4s ease; }
 .message-carousel .mc-dots button[aria-selected="true"] { background:linear-gradient(135deg,var(--accent),var(--accent-alt)); box-shadow:0 0 0 3px rgba(255,255,255,0.08), 0 4px 14px -4px var(--accent-glow); transform:scale(1.25); }

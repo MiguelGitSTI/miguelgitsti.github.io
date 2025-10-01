@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="A gift for our first ever anniversary." />
-    <title>Daphne & Miguel</title>
+    <meta name="description" content="A simple, scroll-smooth, single-page information experience." />
+    <title>Our Story</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
 </head>
@@ -90,7 +90,7 @@
             <div class="alt-row">
                 <div class="card-block section">
                     <h3 class="card-heading">5. No Matter What</h3>
-                   <blockquote>“To love even if it feels like everything is against you, is the purest form of love.”</blockquote>
+                   <blockquote>“To love even if it feels like everything is against you, is the purest for of love.”</blockquote>
                     <p class="micro-note">Micro-moment #25 — To fight through regardless.</p>
                 </div>
                 <div class="text-block">
@@ -127,6 +127,14 @@
     <footer class="site-footer" role="contentinfo">
         <p>Created by <span class="author-name">Miguel</span></p>
     </footer>
+    </div>
+    <!-- Moved overlay outside scroll wrapper to ensure viewport anchoring -->
+    <div id="finalOverlay" class="final-overlay" aria-hidden="true" hidden>
+        <div class="final-content" role="dialog" aria-modal="true" aria-labelledby="finalTitle" aria-describedby="finalSub">
+            <h2 id="finalTitle" class="final-title">I love you Daphne &lt;3</h2>
+            <p id="finalSub" class="final-sub">Happy one year anniversary!</p>
+            <button type="button" class="final-close" aria-label="Close message">Continue</button>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/luxy.js@0.1.0/dist/js/luxy.min.js"></script>
     <script src="app.js"></script>
