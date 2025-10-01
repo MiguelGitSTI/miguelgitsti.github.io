@@ -239,11 +239,11 @@ body { animation: fadeIn .9s ease; }
 .author-name { color:var(--accent); font-weight:600; }
 
 /* Inline love note just above footer */
-.love-note { width:min(900px,92%); margin:0 auto 1.5rem; text-align:center; font-size:.78rem; letter-spacing:.7px; text-transform:uppercase; opacity:.55; line-height:1.4; }
+.love-note { width:min(900px,92%); margin:0 auto 3.5rem; text-align:center; font-size:.78rem; letter-spacing:.7px; text-transform:uppercase; opacity:.55; line-height:1.4; }
 .love-note strong { color:var(--accent); font-weight:700; letter-spacing:.9px; }
 
 /* Message Carousel */
-.message-carousel { position:relative; width:min(900px,92%); margin:0 auto 4rem; padding:2.2rem 3.2rem 2.6rem; background:linear-gradient(145deg, rgba(60,60,64,0.55), rgba(38,38,42,0.55)); backdrop-filter:blur(12px) saturate(140%); border:1px solid rgba(255,255,255,0.08); border-radius:32px; box-shadow:0 16px 46px -20px rgba(0,0,0,0.7), 0 4px 10px -4px rgba(0,0,0,0.55); display:flex; align-items:stretch; gap:1.2rem; overflow:hidden; isolation:isolate; }
+.message-carousel { position:relative; width:min(900px,92%); margin:4.5rem auto 4rem; padding:2.2rem 3.2rem 2.6rem; background:linear-gradient(145deg, rgba(60,60,64,0.55), rgba(38,38,42,0.55)); backdrop-filter:blur(12px) saturate(140%); border:1px solid rgba(255,255,255,0.08); border-radius:32px; box-shadow:0 16px 46px -20px rgba(0,0,0,0.7), 0 4px 10px -4px rgba(0,0,0,0.55); display:flex; align-items:stretch; gap:1.2rem; overflow:hidden; isolation:isolate; }
 .message-carousel:before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 82% 18%, var(--accent-glow) 0%, transparent 68%); opacity:.4; pointer-events:none; mix-blend-mode:screen; }
 .message-carousel:after { content:""; position:absolute; inset:0; background:linear-gradient(160deg, var(--accent-glow-strong), transparent 75%); mix-blend-mode:overlay; pointer-events:none; }
 .message-carousel .mc-arrow { position:relative; z-index:3; appearance:none; border:1px solid rgba(255,255,255,0.2); background:linear-gradient(135deg,var(--accent),var(--accent-alt)); color:#fff; width:48px; height:48px; border-radius:50%; cursor:pointer; font-size:1.3rem; font-weight:600; letter-spacing:.5px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px -6px var(--accent-glow); transition: transform .4s cubic-bezier(.16,.84,.44,1), filter .4s ease, box-shadow .4s ease, opacity .4s ease; }
